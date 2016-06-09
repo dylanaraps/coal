@@ -138,6 +138,7 @@ fi
 
 while [ "$1" ]; do
     case $1 in
+        --colors) c=(${@//--*}) ;;
         --xresources) xresources ;;
         --shell) shell ;;
         --gtk2) gtk2 ;;

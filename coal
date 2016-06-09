@@ -70,8 +70,11 @@ shell () {
 
 gtk2 () {
     for col in "${c[@]}"; do
-        printf "%s\n" "gtk_color_scheme = \"color_${num:-0}:${col}\""
+        printf "%s\n" "gtk_color_scheme = \"color_${num:-0}:${space:-  }${col}\""
         num=$((num+=1))
+
+        # Align the colors
+        [ "${#num}" == 2 ] && space=" "
     done
 }
 

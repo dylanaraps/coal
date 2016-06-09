@@ -84,6 +84,46 @@ firefox () {
 
 # }}}
 
+# iTerm2 Theme {{{
+
+iterm () {
+    printf "%s\n" "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+    printf "%s\n" "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">"
+    printf "%s\n" "<plist version=\"1.0\">"
+    printf "%s\n" "<dict>"
+
+    div () {
+        if [ $1 -eq 255 ]; then
+            printf "%s\n" "1.0"
+        else
+            printf "%s\n" "0.$((${1:-0}0000000000000000/${2:-0}))"
+        fi
+    }
+
+    for col in "${c[@]}"; do
+        red=$(div $((16#${col:1:2})) 255)
+        green=$(div $((16#${col:3:2})) 255)
+        blue=$(div $((16#${col:5:2})) 255)
+
+        printf "%s\n" "        <key>Ansi ${num:-0} Color</key>"
+        printf "%s\n" "        <dict>"
+        printf "%s\n" "                <key>Blue Component</key>"
+        printf "%s\n" "                <real>$blue</real>"
+        printf "%s\n" "                <key>Green Component</key>"
+        printf "%s\n" "                <real>$green</real>"
+        printf "%s\n" "                <key>Red Component</key>"
+        printf "%s\n" "                <real>$red</real>"
+        printf "%s\n" "        </dict>"
+
+        num=$((num+=1))
+    done
+
+    printf "%s\n" "</dict>"
+    printf "%s\n" "</plist>"
+}
+
+# }}}
+
 
 # }}}
 
@@ -102,6 +142,7 @@ while [ "$1" ]; do
         --shell) shell ;;
         --gtk2) gtk2 ;;
         --firefox) firefox ;;
+        --iterm) iterm ;;
     esac
 
     shift

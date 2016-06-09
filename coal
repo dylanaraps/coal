@@ -136,6 +136,11 @@ iterm () {
 
     printf "%s\n" "</dict>"
     printf "%s\n" "</plist>"
+
+}
+
+# }}}
+
 # Openbox {{{
 
 openbox() {

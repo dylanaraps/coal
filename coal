@@ -55,7 +55,7 @@ shell () {
 
 # }}}
 
-# GTK2 Themes {{{
+# GTK2 Theme {{{
 
 
 gtk2 () {
@@ -90,6 +90,11 @@ firefox () {
 
 # Args {{{
 
+# If args are empty.
+if [ $# -eq 0 ]; then
+    printf "%s\n" "Coal must be run with flags."
+    exit 1
+fi
 
 while [ "$1" ]; do
     case $1 in
@@ -101,6 +106,5 @@ while [ "$1" ]; do
 
     shift
 done
-
 
 # }}}

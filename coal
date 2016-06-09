@@ -100,6 +100,30 @@ firefox () {
 
 # }}}
 
+# Openbox {{{
+
+openbox () {
+    printf "%s\n" "\
+# Titlebar colors
+window.active.title.bg.color:       ${c[${1:-0}]}
+window.inactive.title.bg.color:     ${c[${2:-0}]}
+window.active.label.text.color:     ${c[7]}
+window.inactive.label.text.color:   ${c[7]}
+window.*.button.*.image.color:      ${c[7]}
+
+# Menu colors
+menu*.bg.color:                     ${c[7]}
+menu*.text.color:                   ${c[0]}
+menu.border.color:                  ${c[7]}
+menu.separator.color:               ${c[7]}
+
+# Border colors
+window.active.border.color:         ${c[7]}
+window.inactive.border.color:       ${c[7]}"
+}
+
+# }}}
+
 
 # }}}
 
@@ -118,6 +142,7 @@ while [ "$1" ]; do
         --shell) shell ;;
         --gtk2) gtk2 ;;
         --firefox) firefox ;;
+        --openbox) openbox "${2//--*}" "${3//--*}" ;;
     esac
 
     shift

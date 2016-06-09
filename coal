@@ -36,9 +36,17 @@ c=(
 # Xresources {{{
 
 xresources () {
+    # Special colors
+    printf "%s\n" "*.foreground:  ${c[7]}"
+    printf "%s\n" "*.background:  ${c[0]}"
+    printf "%s\n" "*.cursorColor: ${c[7]}"
+
     for col in "${c[@]}"; do
-        printf "%s\n" "*.color${num:-0}:  ${col}"
+        printf "%s\n" "*.color${num:-0}:${space:-  }    ${col}"
         num=$((num+=1))
+
+        # Align the colors
+        [ "${#num}" == 2 ] && space=" "
     done
 }
 

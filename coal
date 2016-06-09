@@ -88,8 +88,11 @@ firefox () {
     printf "%s\n" ":root {"
 
     for col in "${c[@]}"; do
-        printf "%s\n" "    --color${num:-0}: ${col};"
+        printf "%s\n" "    --color${num:-0}:${space:-  }${col};"
         num=$((num+=1))
+
+        # Align the colors
+        [ "${#num}" == 2 ] && space=" "
     done
 
     printf "%s\n" "}"

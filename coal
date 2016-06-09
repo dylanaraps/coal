@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# set -x
+# vim: fdm=marker:noai:ts=4:sw=4
 #
 # Coal
 #
@@ -35,10 +37,18 @@ c=(
 
 # Xresources {{{
 
-xresources () {
+xresources() {
+    # Special colors
+    printf "%s\n" "*.foreground:  ${c[7]}"
+    printf "%s\n" "*.background:  ${c[0]}"
+    printf "%s\n" "*.cursorColor: ${c[7]}"
+
     for col in "${c[@]}"; do
-        printf "%s\n" "*.color${num:-0}:  ${col}"
+        printf "%s\n" "*.color${num:-0}:${space:-  }    ${col}"
         num=$((num+=1))
+
+        # Align the colors
+        [ "${#num}" == 2 ] && space=" "
     done
 }
 
@@ -46,7 +56,7 @@ xresources () {
 
 # Shell Variables {{{
 
-shell () {
+shell() {
     for col in "${c[@]}"; do
         printf "%s\n" "export color${num:-0}='${col}'"
         num=$((num+=1))
@@ -58,10 +68,13 @@ shell () {
 # GTK2 Theme {{{
 
 
-gtk2 () {
+gtk2() {
     for col in "${c[@]}"; do
-        printf "%s\n" "gtk_color_scheme = \"color_${num:-0}:${col}\""
+        printf "%s\n" "gtk_color_scheme = \"color_${num:-0}:${space:-  }${col}\""
         num=$((num+=1))
+
+        # Align the colors
+        [ "${#num}" == 2 ] && space=" "
     done
 }
 
@@ -70,13 +83,16 @@ gtk2 () {
 
 # Firefox CSS {{{
 
-firefox () {
+firefox() {
     printf "%s\n" "/* Color variables */"
     printf "%s\n" ":root {"
 
     for col in "${c[@]}"; do
-        printf "%s\n" "    --color${num:-0}: ${col};"
+        printf "%s\n" "    --color${num:-0}:${space:-  }${col};"
         num=$((num+=1))
+
+        # Align the colors
+        [ "${#num}" == 2 ] && space=" "
     done
 
     printf "%s\n" "}"
@@ -120,6 +136,26 @@ iterm () {
 
     printf "%s\n" "</dict>"
     printf "%s\n" "</plist>"
+# Openbox {{{
+
+openbox() {
+    printf "%s\n" "\
+# Titlebar colors
+window.active.title.bg.color:       ${c[${1:-0}]}
+window.inactive.title.bg.color:     ${c[${2:-0}]}
+window.active.label.text.color:     ${c[7]}
+window.inactive.label.text.color:   ${c[7]}
+window.*.button.*.image.color:      ${c[7]}
+
+# Menu colors
+menu*.bg.color:                     ${c[7]}
+menu*.text.color:                   ${c[0]}
+menu.border.color:                  ${c[7]}
+menu.separator.color:               ${c[7]}
+
+# Border colors
+window.active.border.color:         ${c[7]}
+window.inactive.border.color:       ${c[7]}"
 }
 
 # }}}
@@ -138,11 +174,13 @@ fi
 
 while [ "$1" ]; do
     case $1 in
+        --colors) c=(${@//--*}) ;;
         --xresources) xresources ;;
         --shell) shell ;;
         --gtk2) gtk2 ;;
         --firefox) firefox ;;
         --iterm) iterm ;;
+        --openbox) openbox "${2//--*}" "${3//--*}" ;;
     esac
 
     shift

@@ -1,0 +1,106 @@
+#!/bin/bash
+#
+# Coal
+#
+# Created by Dylan Araps
+#
+# https://github.com/dylanaraps/coal
+
+# Speed up script by not using unicode
+export LC_ALL=C
+export LANG=C
+
+# Colors from 0-15
+c=(
+    '#232c33'
+    '#99736e'
+    '#78a090'
+    '#bfb7a1'
+    '#7c9fa6'
+    '#BF9C86'
+    '#99BFBA'
+    '#f0f0f0'
+    '#70838c'
+    '#99736e'
+    '#78a090'
+    '#bfb7a1'
+    '#7c9fa6'
+    '#BF9C86'
+    '#99BFBA'
+    '#f0f0f0'
+)
+
+# Color functions {{{
+
+
+# Xresources {{{
+
+xresources () {
+    for col in "${c[@]}"; do
+        printf "%s\n" "*.color${num:-0}:  ${col}"
+        num=$((num+=1))
+    done
+}
+
+# }}}
+
+# Shell Variables {{{
+
+shell () {
+    for col in "${c[@]}"; do
+        printf "%s\n" "export color${num:-0}='${col}'"
+        num=$((num+=1))
+    done
+}
+
+# }}}
+
+# GTK2 Themes {{{
+
+
+gtk2 () {
+    for col in "${c[@]}"; do
+        printf "%s\n" "gtk_color_scheme = \"color_${num:-0}:${col}\""
+        num=$((num+=1))
+    done
+}
+
+
+# }}}
+
+# Firefox CSS {{{
+
+firefox () {
+    printf "%s\n" "/* Color variables */"
+    printf "%s\n" ":root {"
+
+    for col in "${c[@]}"; do
+        printf "%s\n" "    --color${num:-0}: ${col};"
+        num=$((num+=1))
+    done
+
+    printf "%s\n" "}"
+}
+
+# }}}
+
+
+# }}}
+
+
+# Args {{{
+
+
+while [ "$1" ]; do
+    case $1 in
+        --xresources) xresources ;;
+        --shell) shell ;;
+        --gtk2) gtk2 ;;
+        --firefox) firefox ;;
+    esac
+
+    shift
+done
+
+
+# }}}

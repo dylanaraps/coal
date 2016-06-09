@@ -6,7 +6,7 @@ formats for use in other programs.
 
 # How it works
 
-1. Edit the array at the top of the script with your colors.
+\1. Edit the array at the top of the script with your colors.
 
 ```sh
 # Example array.
@@ -30,7 +30,7 @@ c=(
 )
 ```
 
-2. Run `coal` to output your colors in various formats for use<br \>
+\2. Run `coal` to output your colors in various formats for use<br \>
 with other programs.
 
 ```sh
@@ -53,4 +53,4 @@ coal --gtk2
 coal --firefox
 ```
 
-3. Add `> filename` to the end of the command to save the output to a file.
+\3. Add `> filename` to the end of the command to save the output to a file.

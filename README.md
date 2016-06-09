@@ -19,3 +19,6 @@ coal --colors "#000000 #000000 #000000 #000000 #000000 #000000 #000000 #000000" 
 
 ```
 
+**Note:** You can list as many or as little colors as you like, the list<br \>
+length above is just an example.
+

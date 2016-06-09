@@ -1,6 +1,6 @@
 # Coal
 
-A script that takes a list of colors and outputs them in various<br \>
+A bash script that takes a list of colors and outputs them in various<br \>
 formats for use in other programs.
 
 

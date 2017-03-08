@@ -45,10 +45,10 @@ xresources() {
 
     for col in "${c[@]}"; do
         printf "%s\n" "*.color${num:-0}:${space:-  }    ${col}"
-        num=$((num+=1))
+        ((num++))
 
         # Align the colors
-        [ "${#num}" == 2 ] && space=" "
+        (("${#num}" == 2)) && space=" "
     done
 }
 
@@ -59,7 +59,7 @@ xresources() {
 shell() {
     for col in "${c[@]}"; do
         printf "%s\n" "export color${num:-0}='${col}'"
-        num=$((num+=1))
+        ((num++))
     done
 }
 
@@ -71,10 +71,10 @@ shell() {
 gtk2() {
     for col in "${c[@]}"; do
         printf "%s\n" "gtk_color_scheme = \"color_${num:-0}:${space:-  }${col}\""
-        num=$((num+=1))
+        ((num++))
 
         # Align the colors
-        [ "${#num}" == 2 ] && space=" "
+        (("${#num}" == 2)) && space=" "
     done
 }
 
@@ -89,10 +89,10 @@ firefox() {
 
     for col in "${c[@]}"; do
         printf "%s\n" "    --color${num:-0}:${space:-  }${col};"
-        num=$((num+=1))
+        ((num++))
 
         # Align the colors
-        [ "${#num}" == 2 ] && space=" "
+        (("${#num}" == 2)) && space=" "
     done
 
     printf "%s\n" "}"
@@ -102,24 +102,24 @@ firefox() {
 
 # iTerm2 Theme {{{
 
-iterm () {
+iterm() {
     printf "%s\n" "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
     printf "%s\n" "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">"
     printf "%s\n" "<plist version=\"1.0\">"
     printf "%s\n" "<dict>"
 
-    div () {
-        if [ $1 -eq 255 ]; then
+    div() {
+        if (("${1}" == 255)); then
             printf "%s\n" "1.0"
         else
-            printf "%s\n" "0.$((${1:-0}0000000000000000/${2:-0}))"
+            printf "%s\n" "0.$((${1:-0}0000000000000000/255))"
         fi
     }
 
     for col in "${c[@]}"; do
-        red=$(div $((16#${col:1:2})) 255)
-        green=$(div $((16#${col:3:2})) 255)
-        blue=$(div $((16#${col:5:2})) 255)
+        red="$(div "$((16#${col:1:2}))")"
+        green="$(div "$((16#${col:3:2}))")"
+        blue="$(div "$((16#${col:5:2}))")"
 
         printf "%s\n" "        <key>Ansi ${num:-0} Color</key>"
         printf "%s\n" "        <dict>"
@@ -131,12 +131,11 @@ iterm () {
         printf "%s\n" "                <real>$red</real>"
         printf "%s\n" "        </dict>"
 
-        num=$((num+=1))
+        ((num++))
     done
 
     printf "%s\n" "</dict>"
     printf "%s\n" "</plist>"
-
 }
 
 # }}}
@@ -172,13 +171,13 @@ window.inactive.border.color:       ${c[7]}"
 # Args {{{
 
 # If args are empty.
-if [ $# -eq 0 ]; then
+if (($# == 0)); then
     printf "%s\n" "Coal must be run with flags."
     exit 1
 fi
 
-while [ "$1" ]; do
-    case $1 in
+while [[ "$1" ]]; do
+    case "$1" in
         --colors) c=(${@//--*}) ;;
         --xresources) xresources ;;
         --shell) shell ;;

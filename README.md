@@ -1,7 +1,6 @@
 # Coal
 
-A bash script that takes a list of colors and outputs them in various<br \>
-formats for use in other programs.
+A bash script that takes a list of colors and outputs them in various formats for use in other programs.
 
 
 # Usage
@@ -19,6 +18,4 @@ coal --colors "#000000 #000000 #000000 #000000 #000000 #000000 #000000 #000000" 
 
 ```
 
-**Note:** You can list as many or as little colors as you like, the list<br \>
-length above is just an example.
-
+**Note:** You can list as many or as little colors as you like, the list length above is just an example.
